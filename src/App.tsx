@@ -4,26 +4,17 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { ParticleBackground } from './components/sections/ParticleBackground';
 
-// Animações - CORRIGIDAS PARA COMPATIBILIDADE COM TYPESCRIPT (sem erro de build)
+// Animações - SIMPLES E COMPATÍVEIS
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.42, 0, 0.58, 1] // cubic-bezier equivalente a "easeOut"
-    }
-  }
+  visible: { opacity: 1, y: 0 }
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
+    transition: { staggerChildren: 0.2 }
   }
 };
 
@@ -172,7 +163,7 @@ function App() {
 
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="order-2 lg:order-1 space-y-10">
-            <motion.div variants={fadeInUp}>
+            <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }}>
               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-mono uppercase tracking-widest">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
@@ -182,18 +173,18 @@ function App() {
               </div>
             </motion.div>
 
-            <motion.h1 variants={fadeInUp} className="text-5xl sm:text-6xl lg:text-7xl xl:text-[6rem] font-black leading-[0.95] tracking-tighter text-white">
+            <motion.h1 variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-5xl sm:text-6xl lg:text-7xl xl:text-[6rem] font-black leading-[0.95] tracking-tighter text-white">
               Ana Sobrinho<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-purple to-brand-orange">SheCode.</span>
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed">
+            <motion.p variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed">
               Estudante do 4º ano de Engenharia Informática no Instituição Superior de Ciência e Tecnologia INSUTEC,
               atualmente a caminho da Licenciatura. Cadete na 42 Luanda, apaixonada por programação low-level
               e desenvolvimento de interfaces modernas com React.
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+            <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
               <button onClick={() => scrollToSection('projetos')} className="group px-10 py-5 bg-white text-slate-950 font-black rounded-2xl shadow-2xl shadow-white/20 hover:scale-105 transition-all flex items-center gap-3">
                 Ver Projetos <ArrowRight className="group-hover:translate-x-2 transition-transform" size={20} />
               </button>
@@ -206,7 +197,7 @@ function App() {
             </motion.div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="order-1 lg:order-2 flex justify-center">
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.42, 0, 0.58, 1] }} className="order-1 lg:order-2 flex justify-center">
             <div className="relative group cursor-pointer" onClick={() => setIsAlternatePhoto(!isAlternatePhoto)}>
               <div className="absolute -inset-6 bg-gradient-to-r from-brand-blue via-brand-purple to-brand-orange rounded-[3rem] blur-2xl opacity-30 group-hover:opacity-50 transition duration-1000" />
 
@@ -228,7 +219,7 @@ function App() {
                   Clique para mudar ⟲
                 </div>
 
-                <motion.div initial={{ y: 40, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
+                <motion.div initial={{ y: 40, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6, duration: 0.8, ease: [0.42, 0, 0.58, 1] }}
                   className="absolute bottom-8 left-8 right-8 p-6 bg-slate-900/80 backdrop-blur-2xl border border-white/20 rounded-3xl">
                   <p className="text-2xl font-black text-white">Ana Sobrinho</p>
                   <p className="text-brand-blue text-sm font-medium">Estudante de Eng. Informática • 42 Luanda Cadet</p>
@@ -246,7 +237,7 @@ function App() {
       {/* PROJETOS */}
       <section id="projetos" className="py-32 px-6 bg-slate-950/40">
         <div className="container mx-auto">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-20">
             <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Portfolio Selecionado</p>
             <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
               Sistemas em <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-orange">Produção</span>
@@ -255,7 +246,7 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {meusProjetos.map((proj, idx) => (
-              <motion.a key={idx} href={proj.link} target="_blank" rel="noreferrer" initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
+              <motion.a key={idx} href={proj.link} target="_blank" rel="noreferrer" initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.42, 0, 0.58, 1] }}
                 whileHover={{ y: -16, scale: 1.03 }} className="group block p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-blue/50 backdrop-blur-sm transition-all duration-500">
                 <div className="flex justify-between items-start mb-8">
                   <div className="p-4 bg-brand-blue/20 rounded-2xl group-hover:bg-brand-blue/40 transition-colors">
@@ -278,14 +269,14 @@ function App() {
       {/* TECNOLOGIAS */}
       <section id="tecnologias" className="py-32 px-6">
         <div className="container mx-auto">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-20">
             <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Stack Principal</p>
             <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">Tecnologias que Domino</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 max-w-5xl mx-auto">
             {tecnologias.map((tech, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
+              <motion.div key={idx} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.42, 0, 0.58, 1] }}
                 whileHover={{ scale: 1.15, y: -12 }} className="group flex flex-col items-center">
                 <div className={`p-8 rounded-3xl bg-white/5 border border-white/10 group-hover:border-brand-blue/50 group-hover:bg-brand-blue/10 transition-all duration-500 shadow-xl ${tech.color}`}>
                   {tech.icon}
@@ -300,7 +291,7 @@ function App() {
       {/* HABILIDADES */}
       <section id="habilidades" className="py-32 px-6">
         <div className="container mx-auto">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16 md:mb-24">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-16 md:mb-24">
             <p className="text-brand-blue font-mono text-xs md:text-sm uppercase tracking-widest mb-4">Competências Principais</p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter">
               Habilidades em <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">Ação</span>
@@ -308,8 +299,12 @@ function App() {
           </motion.div>
 
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            <Feature icon={<Globe size={48} className="text-brand-purple" />} title="Desenvolvimento Front-End" text="Interfaces modernas, acessíveis e fluidas com React, Tailwind e foco em UX/UI." />
-            <Feature icon={<Zap size={48} className="text-brand-orange" />} title="Low-Level & Algoritmos" text="Domínio profundo de C/C++, estruturas de dados e resolução de problemas complexos (42 Luanda)." />
+            <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }}>
+              <Feature icon={<Globe size={48} className="text-brand-purple" />} title="Desenvolvimento Front-End" text="Interfaces modernas, acessíveis e fluidas com React, Tailwind e foco em UX/UI." />
+            </motion.div>
+            <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }}>
+              <Feature icon={<Zap size={48} className="text-brand-orange" />} title="Low-Level & Algoritmos" text="Domínio profundo de C/C++, estruturas de dados e resolução de problemas complexos (42 Luanda)." />
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -317,7 +312,7 @@ function App() {
       {/* TERMINAL */}
       <section id="terminal" className="py-32 px-6">
         <div className="container mx-auto max-w-4xl">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-16">
             <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Contato Direto</p>
             <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
               Terminal SheCode<span className="text-brand-purple">.</span>
@@ -373,11 +368,11 @@ function App() {
       {/* FOOTER */}
       <footer id="contato" className="py-24 border-t border-white/10 bg-gradient-to-t from-slate-950 to-transparent">
         <div className="container mx-auto px-6 text-center">
-          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-4xl md:text-5xl font-black text-white mb-10 tracking-tighter">
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-4xl md:text-5xl font-black text-white mb-10 tracking-tighter">
             VAMOS CONSTRUIR O PRÓXIMO SISTEMA JUNTOS?
           </motion.h2>
 
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="flex justify-center gap-8 mb-16">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="flex justify-center gap-8 mb-16">
             <a href="mailto:ajacs120702@gmail.com" className="p-6 bg-white/5 rounded-3xl hover:bg-brand-blue/20 border border-white/10 hover:border-brand-blue/50 transition-all group">
               <Mail size={36} className="text-slate-400 group-hover:text-brand-blue transition-colors" />
             </a>
@@ -400,7 +395,7 @@ function App() {
 
 function Feature({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
   return (
-    <motion.div variants={fadeInUp} whileHover={{ y: -12 }} className="group relative p-8 md:p-10 lg:p-12 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-blue/40 backdrop-blur-sm transition-all duration-500 text-center">
+    <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} whileHover={{ y: -12 }} className="group relative p-8 md:p-10 lg:p-12 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-blue/40 backdrop-blur-sm transition-all duration-500 text-center">
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 to-brand-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       <div className="relative z-10">
