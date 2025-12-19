@@ -4,17 +4,26 @@ import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { ParticleBackground } from './components/sections/ParticleBackground';
 
-// Animações
+// Animações - CORRIGIDAS PARA COMPATIBILIDADE COM TYPESCRIPT (sem erro de build)
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.42, 0, 0.58, 1] // cubic-bezier equivalente a "easeOut"
+    }
+  }
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2 }
+    transition: {
+      staggerChildren: 0.2
+    }
   }
 };
 
@@ -112,17 +121,15 @@ function App() {
     <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden font-sans antialiased selection:bg-brand-blue/30">
       <ParticleBackground />
 
-      {/* NAVBAR - 100% RESPONSIVA */}
+      {/* NAVBAR - RESPONSIVA */}
       <nav className="fixed top-0 left-0 right-0 w-full z-50 border-b border-white/5 bg-[#020617]/95 backdrop-blur-2xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
             <div className="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-brand-blue/30">S</div>
             <span className="text-2xl font-black tracking-tighter text-white hidden sm:block">SheCodeAjacs</span>
             <span className="text-2xl font-black tracking-tighter text-white sm:hidden">S.</span>
           </div>
 
-          {/* Menu Desktop */}
           <div className="hidden md:flex items-center gap-8 lg:gap-12 text-sm font-medium">
             <button onClick={() => scrollToSection('projetos')} className="hover:text-brand-blue transition-colors">Projetos</button>
             <button onClick={() => scrollToSection('tecnologias')} className="hover:text-brand-blue transition-colors">Tecnologias</button>
@@ -133,35 +140,21 @@ function App() {
             </button>
           </div>
 
-          {/* Hamburger Mobile */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            className="md:hidden p-3 hover:bg-white/10 rounded-xl transition-colors"
-            aria-label="Toggle menu"
-          >
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-3 hover:bg-white/10 rounded-xl transition-colors" aria-label="Toggle menu">
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {/* Overlay Mobile */}
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden absolute top-20 left-0 right-0 bg-[#020617]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl"
-            >
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}
+              className="md:hidden absolute top-20 left-0 right-0 bg-[#020617]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
               <div className="container mx-auto px-6 py-8 flex flex-col gap-1 text-lg font-medium">
                 <button onClick={() => scrollToSection('projetos')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Projetos</button>
                 <button onClick={() => scrollToSection('tecnologias')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Tecnologias</button>
                 <button onClick={() => scrollToSection('habilidades')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Habilidades</button>
                 <button onClick={() => scrollToSection('terminal')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Terminal</button>
-                <button 
-                  onClick={() => scrollToSection('contato')} 
-                  className="bg-brand-blue text-slate-950 px-8 py-4 rounded-full font-bold text-center mt-6 shadow-lg shadow-brand-blue/40"
-                >
+                <button onClick={() => scrollToSection('contato')} className="bg-brand-blue text-slate-950 px-8 py-4 rounded-full font-bold text-center mt-6 shadow-lg shadow-brand-blue/40">
                   Contato
                 </button>
               </div>
@@ -195,11 +188,10 @@ function App() {
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed">
-              Estudante do 4º ano de Engenharia Informática no Instituição Superior de Ciência e Tecnologia INSUTEC, 
-              atualmente a caminho da Licenciatura. Cadete na 42 Luanda, apaixonada por programação low-level 
+              Estudante do 4º ano de Engenharia Informática no Instituição Superior de Ciência e Tecnologia INSUTEC,
+              atualmente a caminho da Licenciatura. Cadete na 42 Luanda, apaixonada por programação low-level
               e desenvolvimento de interfaces modernas com React.
             </motion.p>
-            
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
               <button onClick={() => scrollToSection('projetos')} className="group px-10 py-5 bg-white text-slate-950 font-black rounded-2xl shadow-2xl shadow-white/20 hover:scale-105 transition-all flex items-center gap-3">
@@ -331,7 +323,7 @@ function App() {
               Terminal SheCode<span className="text-brand-purple">.</span>
             </h2>
             <p className="text-slate-400 mt-6 text-lg max-w-3xl mx-auto">
-              Se quiseres perguntar-me algo, enviar uma oportunidade, feedback ou só dizer olá — digita a tua mensagem abaixo e clica em Enviar. 
+              Se quiseres perguntar-me algo, enviar uma oportunidade, feedback ou só dizer olá — digita a tua mensagem abaixo e clica em Enviar.
               Chegará diretamente ao meu inbox em tempo real! 🚀
             </p>
           </motion.div>
