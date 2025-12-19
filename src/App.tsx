@@ -54,8 +54,7 @@ function App() {
   };
 
   // Inicializa EmailJS
-  useEffect(() => 
-  {
+  useEffect(() => {
     emailjs.init('llXWzplALaS2dZrNl');
   }, []);
 
@@ -109,45 +108,101 @@ function App() {
     }
   }, [sending]);
 
+  // Lista de itens do menu
+  const menuItems = [
+    { id: 'projetos', label: 'Projetos' },
+    { id: 'tecnologias', label: 'Tecnologias' },
+    { id: 'habilidades', label: 'Habilidades' },
+    { id: 'terminal', label: 'Terminal' }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden font-sans antialiased selection:bg-brand-blue/30">
+    <div className="min-h-screen bg-[#020617] text-slate-200 overflow-x-hidden font-sans antialiased selection:bg-brand-blue/30 relative">
+      {/* FUNDO GERAL COM fundo.png */}
+      <div className="fixed inset-0 -z-50">
+        <img
+          src="/fundo.png"
+          alt="Fundo geral"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#020617]/80" />
+      </div>
+
       <ParticleBackground />
 
-      {/* NAVBAR - RESPONSIVA */}
+      {/* NAVBAR COM INTERAÇÃO VISUAL MELHORADA */}
       <nav className="fixed top-0 left-0 right-0 w-full z-50 border-b border-white/5 bg-[#020617]/95 backdrop-blur-2xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
             <div className="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-brand-blue/30">S</div>
             <span className="text-2xl font-black tracking-tighter text-white hidden sm:block">SheCodeAjacs</span>
             <span className="text-2xl font-black tracking-tighter text-white sm:hidden">S.</span>
           </div>
 
+          {/* Menu Desktop - TEXTO MUDA DE COR + UNDERLINE ANIMADO */}
           <div className="hidden md:flex items-center gap-8 lg:gap-12 text-sm font-medium">
-            <button onClick={() => scrollToSection('projetos')} className="hover:text-brand-blue transition-colors">Projetos</button>
-            <button onClick={() => scrollToSection('tecnologias')} className="hover:text-brand-blue transition-colors">Tecnologias</button>
-            <button onClick={() => scrollToSection('habilidades')} className="hover:text-brand-blue transition-colors">Habilidades</button>
-            <button onClick={() => scrollToSection('terminal')} className="hover:text-brand-blue transition-colors">Terminal</button>
-            <button onClick={() => scrollToSection('contato')} className="bg-brand-blue text-slate-950 px-6 lg:px-8 py-3 rounded-full font-bold hover:shadow-xl hover:shadow-brand-blue/40 transition-all">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="relative py-2 overflow-hidden"
+              >
+                <motion.span
+                  className="relative z-10 block"
+                  initial={{ backgroundPosition: '0% 50%' }}
+                  whileHover={{ 
+                    backgroundPosition: '100% 50%',
+                    color: 'transparent'
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{
+                    backgroundImage: 'linear-gradient(to right, #3b82f6, #8b5cf6)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'inherit',
+                    backgroundSize: '200% 100%'
+                  }}
+                >
+                  {item.label}
+                </motion.span>
+
+                {/* Underline animado */}
+                <motion.span
+                  className="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-brand-blue to-brand-purple origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </button>
+            ))}
+
+            {/* Botão Contato */}
+            <button
+              onClick={() => scrollToSection('contato')}
+              className="bg-brand-blue text-slate-950 px-6 lg:px-8 py-3 rounded-full font-bold hover:shadow-xl hover:shadow-brand-blue/40 transition-all"
+            >
               Contato
             </button>
           </div>
 
+          {/* Hamburger Mobile */}
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-3 hover:bg-white/10 rounded-xl transition-colors" aria-label="Toggle menu">
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
-{/*ola edmilsom  chefe das confinacas */}
 
-
+        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}
               className="md:hidden absolute top-20 left-0 right-0 bg-[#020617]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
               <div className="container mx-auto px-6 py-8 flex flex-col gap-1 text-lg font-medium">
-                <button onClick={() => scrollToSection('projetos')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Projetos</button>
-                <button onClick={() => scrollToSection('tecnologias')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Tecnologias</button>
-                <button onClick={() => scrollToSection('habilidades')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Habilidades</button>
-                <button onClick={() => scrollToSection('terminal')} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">Terminal</button>
+                {menuItems.map((item) => (
+                  <button key={item.id} onClick={() => scrollToSection(item.id)} className="text-left hover:text-brand-blue transition-colors py-4 border-b border-white/5">
+                    {item.label}
+                  </button>
+                ))}
                 <button onClick={() => scrollToSection('contato')} className="bg-brand-blue text-slate-950 px-8 py-4 rounded-full font-bold text-center mt-6 shadow-lg shadow-brand-blue/40">
                   Contato
                 </button>
@@ -241,9 +296,9 @@ function App() {
       <section id="projetos" className="py-32 px-6 bg-slate-950/40">
         <div className="container mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-20">
-            <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Portfolio Selecionado</p>
+
             <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
-              Sistemas em <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-orange">Produção</span>
+              Sistemas em Produção
             </h2>
           </motion.div>
 
@@ -273,8 +328,8 @@ function App() {
       <section id="tecnologias" className="py-32 px-6">
         <div className="container mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-20">
-            <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Stack Principal</p>
-            <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">Tecnologias que Domino</h2>
+          
+            <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">Tecnologias de Domino</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 max-w-5xl mx-auto">
@@ -295,9 +350,8 @@ function App() {
       <section id="habilidades" className="py-32 px-6">
         <div className="container mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-16 md:mb-24">
-            <p className="text-brand-blue font-mono text-xs md:text-sm uppercase tracking-widest mb-4">Competências Principais</p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter">
-              Habilidades em <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">Ação</span>
+              Habilidades<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">Ação</span>
             </h2>
           </motion.div>
 
@@ -316,12 +370,12 @@ function App() {
       <section id="terminal" className="py-32 px-6">
         <div className="container mx-auto max-w-4xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.42, 0, 0.58, 1] }} className="text-center mb-16">
-            <p className="text-brand-blue font-mono text-sm uppercase tracking-widest mb-4">Contato Direto</p>
+          
             <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
               Terminal SheCode<span className="text-brand-purple">.</span>
             </h2>
             <p className="text-slate-400 mt-6 text-lg max-w-3xl mx-auto">
-              Se quiseres perguntar-me algo, enviar uma oportunidade, feedback ou só dizer olá — digita a tua mensagem abaixo e clica em Enviar.
+              Se quiseres perguntar-me algo, enviar uma oportunidade, feedback ou só dizer olá digita a tua mensagem abaixo e clica em Enviar.
               Chegará diretamente ao meu inbox em tempo real! 🚀
             </p>
           </motion.div>
