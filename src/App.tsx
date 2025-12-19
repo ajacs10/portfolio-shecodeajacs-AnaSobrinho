@@ -54,7 +54,8 @@ function App() {
   };
 
   // Inicializa EmailJS
-  useEffect(() => {
+  useEffect(() => 
+  {
     emailjs.init('llXWzplALaS2dZrNl');
   }, []);
 
@@ -135,6 +136,8 @@ function App() {
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
+{/*ola edmilsom  chefe das confinacas */}
+
 
         <AnimatePresence>
           {mobileMenuOpen && (
